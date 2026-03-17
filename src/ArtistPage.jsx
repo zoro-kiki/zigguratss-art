@@ -100,9 +100,7 @@ const GalleryHero = styled(motion.div)`
 
 // --- Data ---
 const artistsData = [
-  { id: 4, name: "PRASENJIT NATH", loc: "Bongaon, India", cat: "Digital Art", bio: "Based in West Bengal, Prasenjit is a visionary artist with 21+ years of industry experience.", edu: "B.V.A from Rabindra Bharati University", awards: ["International Online Art Award 2024"], img: "https://images.unsplash.com/photo-1544005313-94ddf0286df2" },
-  { id: 2, name: "SHAHBAZ KHAN", loc: "Mumbai, India", cat: "Oil Painting", bio: "Exploring urban chaos through heavy textures and emotional brushwork.", edu: "Sir J.J. School of Art", awards: ["Mumbai Art Society 2023"], img: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d" },
-  { id: 3, name: "SONALY GANDHI", loc: "Hyderabad, India", cat: "Charcoal Drawing", bio: "Fusing hyper-realism with Indian mythological storytelling.", edu: "JNTU Fine Arts", awards: ["National Merit 2022"], img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330" },
+
   {
     id: 1,
     name: "PRASOON CHANDRA PODDAR",
@@ -120,12 +118,16 @@ const artistsData = [
         price: "31,200",
         size: "37 x 45 cm",
         medium: "Acrylic on Paper",
-        img: "https://zigguratss.com/storage/artworks/March2024/ambition-197.jpg" // Example direct link
+        img: "art-197.jpg"
       },
       { title: "DESIRE", price: "31,200", img: "https://picsum.photos/seed/desire/400/500" },
       { title: "FROM THAT WINDOW-I", price: "84,500", img: "https://picsum.photos/seed/window1/400/500" },
     ]
   },
+  { id: 2, name: "PRASENJIT NATH", loc: "Bongaon, India", cat: "Digital Art", bio: "Based in West Bengal, Prasenjit is a visionary artist with 21+ years of industry experience.", edu: "B.V.A from Rabindra Bharati University", awards: ["International Online Art Award 2024"], img: "https://images.unsplash.com/photo-1544005313-94ddf0286df2" },
+  { id: 3, name: "SHAHBAZ KHAN", loc: "Mumbai, India", cat: "Oil Painting", bio: "Exploring urban chaos through heavy textures and emotional brushwork.", edu: "Sir J.J. School of Art", awards: ["Mumbai Art Society 2023"], img: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d" },
+  { id: 4, name: "SONALY GANDHI", loc: "Hyderabad, India", cat: "Charcoal Drawing", bio: "Fusing hyper-realism with Indian mythological storytelling.", edu: "JNTU Fine Arts", awards: ["National Merit 2022"], img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330" },
+  
 ];
 const ArtistImage = ({ src, alt }) => {
   const fallback = "https://via.placeholder.com/400x500?text=Artwork+Coming+Soon";
@@ -209,93 +211,93 @@ const ArtistPage = () => {
       </StackSection>
 
       <AnimatePresence>
-  {selected && (
-    <GalleryHero 
-      initial={{ y: '100%' }} 
-      animate={{ y: 0 }} 
-      exit={{ y: '100%' }} 
-      transition={{ type: 'spring', damping: 25 }}
-    >
-      {/* 1. HERO SECTION: Full Width Grand Image */}
-      <div style={{ position: 'relative', height: '100vh', width: '100%', overflow: 'hidden' }}>
-        <ArtistImage src={selected.img} alt={selected.name} />
-        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, #000 15%, transparent 60%)' }} />
-        
-        {/* Close Button */}
-        <X 
-          onClick={() => setSelected(null)} 
-          style={{ position: 'fixed', top: 30, right: 40, cursor: 'pointer', zIndex: 3000, background: '#D4AF37', borderRadius: '50%', padding: '8px', color: '#000' }} 
-          size={40} 
-        />
-        
-        <div style={{ position: 'absolute', bottom: '10%', left: '8%' }}>
-          <motion.h1 
-            initial={{ x: -100, opacity: 0 }} 
-            animate={{ x: 0, opacity: 1 }} 
-            transition={{ delay: 0.5, duration: 1 }} 
-            style={{ fontSize: 'clamp(3rem, 8vw, 6rem)', color: '#D4AF37', fontFamily: 'serif' }}
+        {selected && (
+          <GalleryHero
+            initial={{ y: '100%' }}
+            animate={{ y: 0 }}
+            exit={{ y: '100%' }}
+            transition={{ type: 'spring', damping: 25 }}
           >
-            {selected.name}
-          </motion.h1>
-          <motion.p 
-            initial={{ opacity: 0 }} 
-            animate={{ opacity: 1 }} 
-            transition={{ delay: 1 }} 
-            style={{ fontSize: '1.5rem', letterSpacing: '8px', opacity: 0.7 }}
-          >
-            {selected.cat}
-          </motion.p>
-        </div>
-      </div>
+            {/* 1. HERO SECTION: Full Width Grand Image */}
+            <div style={{ position: 'relative', height: '100vh', width: '100%', overflow: 'hidden' }}>
+              <ArtistImage src={selected.img} alt={selected.name} />
+              <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, #000 15%, transparent 60%)' }} />
 
-      {/* 2. ARTIST CONTENT: Bio & Details */}
-      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '100px 20px' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '60px' }}>
-          <motion.div initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 1 }}>
-            <h2 style={{ color: '#D4AF37', borderBottom: '1px solid #222', paddingBottom: '20px', letterSpacing: '5px' }}>BIOGRAPHY</h2>
-            <p style={{ lineHeight: '2.2', fontSize: '1.1rem', color: '#ccc', marginTop: '30px' }}>
-              {selected.bio}
-            </p>
-          </motion.div>
+              {/* Close Button */}
+              <X
+                onClick={() => setSelected(null)}
+                style={{ position: 'fixed', top: 30, right: 40, cursor: 'pointer', zIndex: 3000, background: '#D4AF37', borderRadius: '50%', padding: '8px', color: '#000' }}
+                size={40}
+              />
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '30px' }}>
-            <div style={{ background: '#111', padding: '30px', borderRadius: '20px', border: '1px solid #222' }}>
-              <Trophy color="#D4AF37" size={32} />
-              <h4 style={{ color: '#D4AF37', marginTop: '10px' }}>Highlights</h4>
-              <p style={{ marginTop: '10px', fontSize: '0.9rem' }}>{selected.awards[0]}</p>
+              <div style={{ position: 'absolute', bottom: '10%', left: '8%' }}>
+                <motion.h1
+                  initial={{ x: -100, opacity: 0 }}
+                  animate={{ x: 0, opacity: 1 }}
+                  transition={{ delay: 0.5, duration: 1 }}
+                  style={{ fontSize: 'clamp(3rem, 8vw, 6rem)', color: '#D4AF37', fontFamily: 'serif' }}
+                >
+                  {selected.name}
+                </motion.h1>
+                <motion.p
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 1 }}
+                  style={{ fontSize: '1.5rem', letterSpacing: '8px', opacity: 0.7 }}
+                >
+                  {selected.cat}
+                </motion.p>
+              </div>
             </div>
-            <div style={{ background: '#111', padding: '30px', borderRadius: '20px', border: '1px solid #222' }}>
-              <Briefcase color="#D4AF37" size={32} />
-              <h4 style={{ color: '#D4AF37', marginTop: '10px' }}>Education</h4>
-              <p style={{ marginTop: '10px', fontSize: '0.9rem' }}>{selected.edu}</p>
-            </div>
-          </div>
-        </div>
 
-        {/* 3. ARTWORKS SECTION: Dynamic Price & Image Handling */}
-        <h2 style={{ textAlign: 'center', marginTop: '120px', letterSpacing: '10px', color: '#D4AF37' }}>ARTWORKS FOR SALE</h2>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '40px', marginTop: '60px' }}>
-          {selected.artworks ? (
-            selected.artworks.map((art, i) => (
-              <motion.div whileHover={{ y: -15 }} key={i} style={{ background: '#111', padding: '20px', borderRadius: '20px', textAlign: 'center', border: '1px solid #222' }}>
-                <div style={{ height: '320px', border: '4px solid white', overflow: 'hidden', borderRadius: '10px' }}>
-                  <ArtistImage src={art.img} alt={art.title} />
+            {/* 2. ARTIST CONTENT: Bio & Details */}
+            <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '100px 20px' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '60px' }}>
+                <motion.div initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 1 }}>
+                  <h2 style={{ color: '#D4AF37', borderBottom: '1px solid #222', paddingBottom: '20px', letterSpacing: '5px' }}>BIOGRAPHY</h2>
+                  <p style={{ lineHeight: '2.2', fontSize: '1.1rem', color: '#ccc', marginTop: '30px' }}>
+                    {selected.bio}
+                  </p>
+                </motion.div>
+
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '30px' }}>
+                  <div style={{ background: '#111', padding: '30px', borderRadius: '20px', border: '1px solid #222' }}>
+                    <Trophy color="#D4AF37" size={32} />
+                    <h4 style={{ color: '#D4AF37', marginTop: '10px' }}>Highlights</h4>
+                    <p style={{ marginTop: '10px', fontSize: '0.9rem' }}>{selected.awards[0]}</p>
+                  </div>
+                  <div style={{ background: '#111', padding: '30px', borderRadius: '20px', border: '1px solid #222' }}>
+                    <Briefcase color="#D4AF37" size={32} />
+                    <h4 style={{ color: '#D4AF37', marginTop: '10px' }}>Education</h4>
+                    <p style={{ marginTop: '10px', fontSize: '0.9rem' }}>{selected.edu}</p>
+                  </div>
                 </div>
-                <h4 style={{ marginTop: '15px', letterSpacing: '1px' }}>{art.title}</h4>
-                <p style={{ color: '#D4AF37', fontSize: '1.2rem', fontWeight: 'bold' }}>₹ {art.price}/-</p>
-                <button style={{ width: '100%', marginTop: '15px', padding: '12px', background: '#D4AF37', color: '#000', fontWeight: 'bold', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>
-                  INQUIRE NOW
-                </button>
-              </motion.div>
-            ))
-          ) : (
-            <p style={{ textAlign: 'center', gridColumn: '1/-1', opacity: 0.5 }}>Full collection coming soon...</p>
-          )}
-        </div>
-      </div>
-    </GalleryHero>
-  )}
-</AnimatePresence>
+              </div>
+
+              {/* 3. ARTWORKS SECTION: Dynamic Price & Image Handling */}
+              <h2 style={{ textAlign: 'center', marginTop: '120px', letterSpacing: '10px', color: '#D4AF37' }}>ARTWORKS FOR SALE</h2>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '40px', marginTop: '60px' }}>
+                {selected.artworks ? (
+                  selected.artworks.map((art, i) => (
+                    <motion.div whileHover={{ y: -15 }} key={i} style={{ background: '#111', padding: '20px', borderRadius: '20px', textAlign: 'center', border: '1px solid #222' }}>
+                      <div style={{ height: '320px', border: '4px solid white', overflow: 'hidden', borderRadius: '10px' }}>
+                        <ArtistImage src={art.img} alt={art.title} />
+                      </div>
+                      <h4 style={{ marginTop: '15px', letterSpacing: '1px' }}>{art.title}</h4>
+                      <p style={{ color: '#D4AF37', fontSize: '1.2rem', fontWeight: 'bold' }}>₹ {art.price}/-</p>
+                      <button style={{ width: '100%', marginTop: '15px', padding: '12px', background: '#D4AF37', color: '#000', fontWeight: 'bold', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>
+                        INQUIRE NOW
+                      </button>
+                    </motion.div>
+                  ))
+                ) : (
+                  <p style={{ textAlign: 'center', gridColumn: '1/-1', opacity: 0.5 }}>Full collection coming soon...</p>
+                )}
+              </div>
+            </div>
+          </GalleryHero>
+        )}
+      </AnimatePresence>
     </ThemeProvider>
   );
 }
