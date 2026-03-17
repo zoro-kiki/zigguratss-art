@@ -100,9 +100,27 @@ const GalleryHero = styled(motion.div)`
 
 // --- Data ---
 const artistsData = [
-  { id: 1, name: "PRASENJIT NATH", loc: "Bongaon, India", cat: "Digital Art", bio: "Based in West Bengal, Prasenjit is a visionary artist with 21+ years of industry experience.", edu: "B.V.A from Rabindra Bharati University", awards: ["International Online Art Award 2024"], img: "https://images.unsplash.com/photo-1544005313-94ddf0286df2" },
+  { id: 4, name: "PRASENJIT NATH", loc: "Bongaon, India", cat: "Digital Art", bio: "Based in West Bengal, Prasenjit is a visionary artist with 21+ years of industry experience.", edu: "B.V.A from Rabindra Bharati University", awards: ["International Online Art Award 2024"], img: "https://images.unsplash.com/photo-1544005313-94ddf0286df2" },
   { id: 2, name: "SHAHBAZ KHAN", loc: "Mumbai, India", cat: "Oil Painting", bio: "Exploring urban chaos through heavy textures and emotional brushwork.", edu: "Sir J.J. School of Art", awards: ["Mumbai Art Society 2023"], img: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d" },
   { id: 3, name: "SONALY GANDHI", loc: "Hyderabad, India", cat: "Charcoal Drawing", bio: "Fusing hyper-realism with Indian mythological storytelling.", edu: "JNTU Fine Arts", awards: ["National Merit 2022"], img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330" },
+  {
+    id: 1, // Check karo next available ID kya hai
+    name: "PRASOON CHANDRA PODDAR",
+    loc: "Bihar, India",
+    cat: "Painting & Mixed Media",
+    rating: 5.0,
+    tag: "INSPIRATIONAL",
+    bio: "Born in 1983, Prasoon believes arts are a tool of expression for everyone. His work challenges the notion of 'beauty' and 'waste', often capturing human forms in relation to imagination and reality.",
+    edu: "Bachelors & Masters in Fine Arts from Jamia Milia Islamia University",
+    awards: ["Acclaimed series on Currency depicting Construction vs Destruction"],
+    img: "prasoon.png",
+    artworks: [
+      { title: "AMBITION", price: "31,200", img: "art-197.jpg" },
+      { title: "DESIRE", price: "31,200", img: "https://your-image-url.com/desire.jpg" },
+      { title: "FROM THAT WINDOW-I", price: "84,500", img: "https://your-image-url.com/window1.jpg" },
+      { title: "FROM THAT WINDOW", price: "84,500", img: "https://your-image-url.com/window2.jpg" }
+    ]
+  },
 ];
 
 const ArtistPage = () => {
