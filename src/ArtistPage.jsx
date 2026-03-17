@@ -104,25 +104,40 @@ const artistsData = [
   { id: 2, name: "SHAHBAZ KHAN", loc: "Mumbai, India", cat: "Oil Painting", bio: "Exploring urban chaos through heavy textures and emotional brushwork.", edu: "Sir J.J. School of Art", awards: ["Mumbai Art Society 2023"], img: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d" },
   { id: 3, name: "SONALY GANDHI", loc: "Hyderabad, India", cat: "Charcoal Drawing", bio: "Fusing hyper-realism with Indian mythological storytelling.", edu: "JNTU Fine Arts", awards: ["National Merit 2022"], img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330" },
   {
-    id: 1, // Check karo next available ID kya hai
+    id: 1,
     name: "PRASOON CHANDRA PODDAR",
     loc: "Bihar, India",
-    cat: "Painting & Mixed Media",
+    cat: "Abstraction",
     rating: 5.0,
-    tag: "INSPIRATIONAL",
-    bio: "Born in 1983, Prasoon believes arts are a tool of expression for everyone. His work challenges the notion of 'beauty' and 'waste', often capturing human forms in relation to imagination and reality.",
+    tag: "MFA JAMIA MILIA",
+    bio: "My art practice is about my visual thinking to see around our society as a conscious mind. I paint different things with different messages, capturing human forms in relation to imagination and reality.",
     edu: "Bachelors & Masters in Fine Arts from Jamia Milia Islamia University",
-    awards: ["Acclaimed series on Currency depicting Construction vs Destruction"],
+    awards: ["Year of art work: 2022", "Material used: Paper", "Technique: Acrylic"],
     img: "prasoon.png",
     artworks: [
-      { title: "AMBITION", price: "31,200", img: "art-197.jpg" },
-      { title: "DESIRE", price: "31,200", img: "https://your-image-url.com/desire.jpg" },
-      { title: "FROM THAT WINDOW-I", price: "84,500", img: "https://your-image-url.com/window1.jpg" },
-      { title: "FROM THAT WINDOW", price: "84,500", img: "https://your-image-url.com/window2.jpg" }
+      {
+        title: "AMBITION",
+        price: "31,200",
+        size: "37 x 45 cm",
+        medium: "Acrylic on Paper",
+        img: "https://zigguratss.com/storage/artworks/March2024/ambition-197.jpg" // Example direct link
+      },
+      { title: "DESIRE", price: "31,200", img: "https://picsum.photos/seed/desire/400/500" },
+      { title: "FROM THAT WINDOW-I", price: "84,500", img: "https://picsum.photos/seed/window1/400/500" },
     ]
   },
 ];
-
+const ArtistImage = ({ src, alt }) => {
+  const fallback = "https://via.placeholder.com/400x500?text=Artwork+Coming+Soon";
+  return (
+    <img
+      src={src || fallback}
+      alt={alt || "Zigguratss Artwork"}
+      onError={(e) => { e.target.src = "https://via.placeholder.com/400x500?text=Image+Not+Found"; }}
+      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+    />
+  );
+};
 const ArtistPage = () => {
   const [selected, setSelected] = useState(null);
   const [theme, setTheme] = useState('dark');
@@ -181,7 +196,7 @@ const ArtistPage = () => {
               viewport={{ margin: "-100px" }}
               onClick={() => setSelected(artist)}
             >
-              <ImageSide><img src={artist.img} alt={artist.name} /></ImageSide>
+              <ImageSide><ArtistImage src={artist.img} alt={artist.name} /></ImageSide>
               <InfoSide>
                 <span style={{ color: '#D4AF37', letterSpacing: '3px', fontSize: '0.7rem' }}>{artist.cat.toUpperCase()}</span>
                 <h1 style={{ fontSize: '3rem', margin: '15px 0', fontFamily: 'serif' }}>{artist.name}</h1>
@@ -194,65 +209,93 @@ const ArtistPage = () => {
       </StackSection>
 
       <AnimatePresence>
-        {selected && (
-          <GalleryHero initial={{ y: '100%' }} animate={{ y: 0 }} exit={{ y: '100%' }} transition={{ type: 'spring', damping: 25 }}>
-            {/* FULL WIDTH GRAND IMAGE - LAPTOP VIEW READY */}
-            <div style={{ position: 'relative', height: '100vh', width: '100%', overflow: 'hidden' }}>
-              <motion.img
-                initial={{ scale: 1.3, filter: 'blur(10px)' }}
-                animate={{ scale: 1, filter: 'blur(0px)' }}
-                transition={{ duration: 1.5 }}
-                src={selected.img}
-                style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 20%' }}
-              />
-              <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, #000 15%, transparent 60%)' }} />
+  {selected && (
+    <GalleryHero 
+      initial={{ y: '100%' }} 
+      animate={{ y: 0 }} 
+      exit={{ y: '100%' }} 
+      transition={{ type: 'spring', damping: 25 }}
+    >
+      {/* 1. HERO SECTION: Full Width Grand Image */}
+      <div style={{ position: 'relative', height: '100vh', width: '100%', overflow: 'hidden' }}>
+        <ArtistImage src={selected.img} alt={selected.name} />
+        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, #000 15%, transparent 60%)' }} />
+        
+        {/* Close Button */}
+        <X 
+          onClick={() => setSelected(null)} 
+          style={{ position: 'fixed', top: 30, right: 40, cursor: 'pointer', zIndex: 3000, background: '#D4AF37', borderRadius: '50%', padding: '8px', color: '#000' }} 
+          size={40} 
+        />
+        
+        <div style={{ position: 'absolute', bottom: '10%', left: '8%' }}>
+          <motion.h1 
+            initial={{ x: -100, opacity: 0 }} 
+            animate={{ x: 0, opacity: 1 }} 
+            transition={{ delay: 0.5, duration: 1 }} 
+            style={{ fontSize: 'clamp(3rem, 8vw, 6rem)', color: '#D4AF37', fontFamily: 'serif' }}
+          >
+            {selected.name}
+          </motion.h1>
+          <motion.p 
+            initial={{ opacity: 0 }} 
+            animate={{ opacity: 1 }} 
+            transition={{ delay: 1 }} 
+            style={{ fontSize: '1.5rem', letterSpacing: '8px', opacity: 0.7 }}
+          >
+            {selected.cat}
+          </motion.p>
+        </div>
+      </div>
 
-              <X onClick={() => setSelected(null)} style={{ position: 'fixed', top: 30, right: 40, cursor: 'pointer', zIndex: 3000, background: '#D4AF37', borderRadius: '50%', padding: '8px', color: '#000' }} size={40} />
+      {/* 2. ARTIST CONTENT: Bio & Details */}
+      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '100px 20px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '60px' }}>
+          <motion.div initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 1 }}>
+            <h2 style={{ color: '#D4AF37', borderBottom: '1px solid #222', paddingBottom: '20px', letterSpacing: '5px' }}>BIOGRAPHY</h2>
+            <p style={{ lineHeight: '2.2', fontSize: '1.1rem', color: '#ccc', marginTop: '30px' }}>
+              {selected.bio}
+            </p>
+          </motion.div>
 
-              <div style={{ position: 'absolute', bottom: '10%', left: '8%' }}>
-                <motion.h1 initial={{ x: -100, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ delay: 0.5, duration: 1 }} style={{ fontSize: 'clamp(3rem, 8vw, 6rem)', color: '#D4AF37', fontFamily: 'serif' }}>{selected.name}</motion.h1>
-                <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1 }} style={{ fontSize: '1.5rem', letterSpacing: '8px', opacity: 0.7 }}>{selected.cat}</motion.p>
-              </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '30px' }}>
+            <div style={{ background: '#111', padding: '30px', borderRadius: '20px', border: '1px solid #222' }}>
+              <Trophy color="#D4AF37" size={32} />
+              <h4 style={{ color: '#D4AF37', marginTop: '10px' }}>Highlights</h4>
+              <p style={{ marginTop: '10px', fontSize: '0.9rem' }}>{selected.awards[0]}</p>
             </div>
+            <div style={{ background: '#111', padding: '30px', borderRadius: '20px', border: '1px solid #222' }}>
+              <Briefcase color="#D4AF37" size={32} />
+              <h4 style={{ color: '#D4AF37', marginTop: '10px' }}>Education</h4>
+              <p style={{ marginTop: '10px', fontSize: '0.9rem' }}>{selected.edu}</p>
+            </div>
+          </div>
+        </div>
 
-            {/* ARTIST CONTENT - SCROLL REVEAL */}
-            <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '100px 20px' }}>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '60px' }}>
-                <motion.div initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 1 }}>
-                  <h2 style={{ color: '#D4AF37', borderBottom: '1px solid #222', paddingBottom: '20px', letterSpacing: '5px' }}>BIOGRAPHY</h2>
-                  <p style={{ lineHeight: '2.2', fontSize: '1.2rem', color: '#ccc', marginTop: '30px' }}>{selected.bio} Working at the intersection of tradition and digital innovation, this artist brings a unique perspective to the global art scene.</p>
-                </motion.div>
-
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '30px' }}>
-                  <div style={{ background: '#111', padding: '30px', borderRadius: '20px', border: '1px solid #222' }}>
-                    <Trophy color="#D4AF37" size={32} />
-                    <p style={{ marginTop: '15px' }}>{selected.awards[0]}</p>
-                  </div>
-                  <div style={{ background: '#111', padding: '30px', borderRadius: '20px', border: '1px solid #222' }}>
-                    <Briefcase color="#D4AF37" size={32} />
-                    <p style={{ marginTop: '15px' }}>{selected.edu}</p>
-                  </div>
+        {/* 3. ARTWORKS SECTION: Dynamic Price & Image Handling */}
+        <h2 style={{ textAlign: 'center', marginTop: '120px', letterSpacing: '10px', color: '#D4AF37' }}>ARTWORKS FOR SALE</h2>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '40px', marginTop: '60px' }}>
+          {selected.artworks ? (
+            selected.artworks.map((art, i) => (
+              <motion.div whileHover={{ y: -15 }} key={i} style={{ background: '#111', padding: '20px', borderRadius: '20px', textAlign: 'center', border: '1px solid #222' }}>
+                <div style={{ height: '320px', border: '4px solid white', overflow: 'hidden', borderRadius: '10px' }}>
+                  <ArtistImage src={art.img} alt={art.title} />
                 </div>
-              </div>
-
-              {/* ARTWORK WITH PRICES - REAL INDUSTRY LOOK */}
-              <h2 style={{ textAlign: 'center', marginTop: '120px', letterSpacing: '10px', color: '#D4AF37' }}>ARTWORKS FOR SALE</h2>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '40px', marginTop: '60px' }}>
-                {[1, 2, 3, 4].map(i => (
-                  <motion.div whileHover={{ y: -15 }} key={i} style={{ background: '#111', padding: '20px', borderRadius: '20px', textAlign: 'center', border: '1px solid #222' }}>
-                    <div style={{ height: '320px', border: '4px solid white', overflow: 'hidden', borderRadius: '10px' }}>
-                      <img src={`https://picsum.photos/seed/${selected.id + i + 50}/500/700`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} alt="art" />
-                    </div>
-                    <h4 style={{ marginTop: '15px', letterSpacing: '1px' }}>CREATION #{i}</h4>
-                    <p style={{ color: '#D4AF37', fontSize: '1.2rem', fontWeight: 'bold' }}>₹ 65,000/-</p>
-                    <button style={{ width: '100%', marginTop: '15px', padding: '12px', background: '#D4AF37', color: '#000', fontWeight: 'bold', border: 'none', borderRadius: '5px' }}>INQUIRE NOW</button>
-                  </motion.div>
-                ))}
-              </div>
-            </div>
-          </GalleryHero>
-        )}
-      </AnimatePresence>
+                <h4 style={{ marginTop: '15px', letterSpacing: '1px' }}>{art.title}</h4>
+                <p style={{ color: '#D4AF37', fontSize: '1.2rem', fontWeight: 'bold' }}>₹ {art.price}/-</p>
+                <button style={{ width: '100%', marginTop: '15px', padding: '12px', background: '#D4AF37', color: '#000', fontWeight: 'bold', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>
+                  INQUIRE NOW
+                </button>
+              </motion.div>
+            ))
+          ) : (
+            <p style={{ textAlign: 'center', gridColumn: '1/-1', opacity: 0.5 }}>Full collection coming soon...</p>
+          )}
+        </div>
+      </div>
+    </GalleryHero>
+  )}
+</AnimatePresence>
     </ThemeProvider>
   );
 }
