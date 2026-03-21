@@ -1,5 +1,5 @@
 import React from 'react';
-import ArtistPage from './ArtistPage'; // Ye tumhari file ko import karega
+import ArtistPage from './ArtistPage'; 
 
 function App() {
   return (
